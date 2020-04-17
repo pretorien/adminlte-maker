@@ -1,0 +1,18 @@
+{
+    "name": "pretorien/adminlte-maker",
+    "type": "symfony-bundle",
+    "description": "",
+    "require": {
+        "kevinpapst/adminlte-bundle": "^3.0",
+        "omines/datatables-bundle": "^0.4.2"
+    },
+    "autoload": {
+        "psr-4": { "Pretorien\\AdminLTEMakerBundle\\": "" }
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
