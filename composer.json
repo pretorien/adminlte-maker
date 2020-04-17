@@ -4,7 +4,8 @@
     "description": "",
     "require": {
         "kevinpapst/adminlte-bundle": "^3.0",
-        "omines/datatables-bundle": "^0.4.2"
+        "omines/datatables-bundle": "^0.4.2",
+        "symfony/maker-bundle": "^1.14"
     },
     "autoload": {
         "psr-4": { "Pretorien\\AdminLTEMakerBundle\\": "" }
