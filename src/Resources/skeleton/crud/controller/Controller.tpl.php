@@ -103,10 +103,15 @@ class <?= $class_name ?> extends <?= $parent_class_name; ?><?= "\n" ?>
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($<?= $entity_var_singular ?>);
-            $entityManager->flush();
-
+            try {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($<?= $entity_var_singular ?>);
+                $entityManager->flush();
+            } catch (\Throwable $th) {
+                $this->addFlash("error", "Error saving item");
+                return $this->redirectToRoute('<?= $route_name ?>_index');
+            }
+            $this->addFlash("success", "Item successfully registered");
             return $this->redirectToRoute('<?= $route_name ?>_index');
         }
 
@@ -135,8 +140,13 @@ class <?= $class_name ?> extends <?= $parent_class_name; ?><?= "\n" ?>
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
+            try {
+                $this->getDoctrine()->getManager()->flush();
+            } catch (\Throwable $th) {
+                $this->addFlash("error", "Error saving item");
+                return $this->redirectToRoute('<?= $route_name ?>_index');
+            }
+            $this->addFlash("success", "Item successfully registered");
             return $this->redirectToRoute('<?= $route_name ?>_index');
         }
 
@@ -147,16 +157,24 @@ class <?= $class_name ?> extends <?= $parent_class_name; ?><?= "\n" ?>
     }
 
     /**
-     * @Route("/{<?= $entity_identifier ?>}", name="<?= $route_name ?>_delete", methods={"DELETE"})
+     * @Route("/{<?= $entity_identifier ?>}/delete/{token}", name="<?= $route_name ?>_delete", methods={"GET"})
      */
-    public function delete(Request $request, <?= $entity_class_name ?> $<?= $entity_var_singular ?>): Response
+    public function delete(Request $request, <?= $entity_class_name ?> $<?= $entity_var_singular ?>, $token): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$<?= $entity_var_singular ?>->get<?= ucfirst($entity_identifier) ?>(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($<?= $entity_var_singular ?>);
-            $entityManager->flush();
+        if ($this->isCsrfTokenValid('delete'.$<?= $entity_var_singular ?>->get<?= ucfirst($entity_identifier) ?>(), $token)) {
+            try {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($<?= $entity_var_singular ?>);
+                $entityManager->flush();
+            } catch (\Throwable $th) {
+                $this->addFlash("error", "Error deleted item");
+                return $this->redirectToRoute('<?= $route_name ?>_index');
+            }
+            $this->addFlash("success", "Item successfully deleted");
+            return $this->redirectToRoute('<?= $route_name ?>_index');            
         }
 
+        $this->addFlash("error", "Error deleted item");
         return $this->redirectToRoute('<?= $route_name ?>_index');
     }
 }
