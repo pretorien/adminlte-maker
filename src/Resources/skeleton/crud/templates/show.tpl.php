@@ -1,4 +1,4 @@
-{% extends 'layout/datatable_base.html.twig' %}
+{% extends '<?= $base_layout ?>' %}
 
 {% block page_content %}
     <div class="row">

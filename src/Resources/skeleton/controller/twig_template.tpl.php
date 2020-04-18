@@ -1,4 +1,4 @@
-{% extends 'layout/base.html.twig' %}
+{% extends '<?= $base_layout ?>' %}
 
 {% block page_content %}
 <style>

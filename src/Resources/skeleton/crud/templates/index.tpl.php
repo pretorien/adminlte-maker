@@ -1,4 +1,4 @@
-{% extends 'layout/datatable_base.html.twig' %}
+{% extends '<?= $base_layout ?>' %}
 
 {% block page_content %}
     <div class="row">
@@ -20,8 +20,15 @@
     </div>
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="<?= $cdn_css ?>"/>
+{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
+    <script type="text/javascript" src="<?= $cdn_js ?>"></script>
+    <script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
     <script type="text/javascript">
     $(function() {
         $('#<?= $entity_twig_var_plural ?>').initDataTables({{ datatable_settings(datatable) }});

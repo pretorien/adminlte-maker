@@ -1,4 +1,4 @@
-{% extends 'layout/base.html.twig' %}
+{% extends '<?= $base_layout ?>' %}
 
 {% block title %}{{ 'Create new <?= $entity_class_name ?>'|trans }}{% endblock %}
 

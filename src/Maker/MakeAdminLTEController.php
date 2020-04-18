@@ -28,10 +28,11 @@ class MakeAdminLTEController extends AbstractMaker
 {
 
     protected $skeletonDir;
+    protected $baseLayout;
 
-    public function __construct()
-    {
-        $this->skeletonDir = __DIR__ . "/../../templates/maker/skeleton/";
+    public function setConfiguration($configuration){
+        $this->skeletonDir = $configuration['skeleton_dir'];
+        $this->baseLayout = $configuration['base_layout'];
     }
 
     public static function getCommandName(): string
@@ -77,6 +78,7 @@ class MakeAdminLTEController extends AbstractMaker
                     'controller_path' => $controllerPath,
                     'root_directory' => $generator->getRootDirectory(),
                     'class_name' => $controllerClassNameDetails->getShortName(),
+                    'base_layout' => $this->baseLayout,
                 ]
             );
         }

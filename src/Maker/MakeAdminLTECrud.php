@@ -40,14 +40,23 @@ class MakeAdminLTECrud extends AbstractMaker
     private $formTypeRenderer;
 
     private $skeletonDir;
+    private $baseLayout;
+    private $cdnCss;
+    private $cdnJs;
 
     public function __construct(DoctrineHelper $doctrineHelper, FormTypeRenderer $formTypeRenderer)
     {
         $this->doctrineHelper = $doctrineHelper;
         $this->formTypeRenderer = $formTypeRenderer;
-        $this->skeletonDir = __DIR__ . "/../../templates/maker/skeleton/";
     }
 
+    public function setConfiguration($configuration){
+        $this->skeletonDir = $configuration['skeleton_dir'];
+        $this->baseLayout = $configuration['base_layout'];
+        $this->cdnCss = $configuration['datatable']['cdn_css'];
+        $this->cdnJs = $configuration['datatable']['cdn_js'];
+    }
+    
     public static function getCommandName(): string
     {
         return 'make:adminlte:crud';
@@ -132,8 +141,6 @@ class MakeAdminLTECrud extends AbstractMaker
         $routeName = Str::asRouteName($controllerClassDetails->getRelativeNameWithoutSuffix());
         $templatesPath = Str::asFilePath($controllerClassDetails->getRelativeNameWithoutSuffix());
         
-        dump( $entityDoctrineDetails->getDisplayFields());
-        
         $generator->generateController(
             $controllerClassDetails->getFullName(),
             $this->skeletonDir . 'crud/controller/Controller.tpl.php',
@@ -165,6 +172,7 @@ class MakeAdminLTECrud extends AbstractMaker
         $templates = [
             '_delete_form' => [
                 'route_name' => $routeName,
+                'base_layout' => $this->baseLayout,
                 'entity_twig_var_singular' => $entityTwigVarSingular,
                 'entity_identifier' => $entityDoctrineDetails->getIdentifier(),
             ],
@@ -174,6 +182,7 @@ class MakeAdminLTECrud extends AbstractMaker
                 'entity_twig_var_singular' => $entityTwigVarSingular,
                 'entity_identifier' => $entityDoctrineDetails->getIdentifier(),
                 'route_name' => $routeName,
+                'base_layout' => $this->baseLayout,
             ],
             'index' => [
                 'entity_class_name' => $entityClassDetails->getShortName(),
@@ -182,10 +191,14 @@ class MakeAdminLTECrud extends AbstractMaker
                 'entity_identifier' => $entityDoctrineDetails->getIdentifier(),
                 'entity_fields' => $entityDoctrineDetails->getDisplayFields(),
                 'route_name' => $routeName,
+                'base_layout' => $this->baseLayout,
+                'cdn_css' => $this->cdnCss,
+                'cdn_js' => $this->cdnJs,
             ],
             'new' => [
                 'entity_class_name' => $entityClassDetails->getShortName(),
                 'route_name' => $routeName,
+                'base_layout' => $this->baseLayout,
             ],
             'show' => [
                 'entity_class_name' => $entityClassDetails->getShortName(),
@@ -193,6 +206,7 @@ class MakeAdminLTECrud extends AbstractMaker
                 'entity_identifier' => $entityDoctrineDetails->getIdentifier(),
                 'entity_fields' => $entityDoctrineDetails->getDisplayFields(),
                 'route_name' => $routeName,
+                'base_layout' => $this->baseLayout,
             ],
         ];
 

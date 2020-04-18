@@ -1,6 +1,6 @@
-<?= $helper->getHeadPrintCode('Edit '.$entity_class_name) ?>
+{% extends '<?= $base_layout ?>' %}
 
-{% block body %}
+{% block page_content %}
     <h1>Edit <?= $entity_class_name ?></h1>
 
     {{ include('<?= $route_name ?>/_form.html.twig', {'button_label': 'Update'}) }}
