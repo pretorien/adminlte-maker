@@ -1,19 +1,26 @@
 {
     "name": "pretorien/adminlte-maker",
     "type": "symfony-bundle",
-    "description": "",
+    "description": "AdminLTE Maker helps you create controllers and templates boostraped for Admin theme bundle",
+    "license": "MIT",
     "require": {
+        "php": "^7.1.3",
+        "symfony/http-kernel": ">4.0",
+        "symfony/config": ">4.0",
+        "symfony/twig-bundle": ">4.0",
+        "symfony/console": ">4.0",
+        "symfony/form": ">4.0",
+        "symfony/routing": ">4.0",
+        "symfony/security-bundle": ">4.0",
+        "symfony/validator": ">4.0",
+        "symfony/maker-bundle": ">1.0",
+        "sensio/framework-extra-bundle": ">4.0",
+        "doctrine/annotations": "^1.0",
+        "doctrine/common": "^2.0",
         "kevinpapst/adminlte-bundle": "^3.0",
-        "omines/datatables-bundle": "^0.4.2",
-        "symfony/maker-bundle": "^1.14"
+        "omines/datatables-bundle": "^0.4.2"
     },
     "autoload": {
-        "psr-4": { "Pretorien\\AdminLTEMakerBundle\\": "" }
-    },
-    "minimum-stability": "dev",
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0-dev"
-        }
+        "psr-4": { "Pretorien\\AdminLTEMakerBundle\\": "src/" }
     }
 }
