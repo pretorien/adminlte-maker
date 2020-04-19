@@ -47,7 +47,7 @@ This bundle doesn't require any configuration. But, you can configure the base l
 ```sh
 php bin/console config:dump admin_lte_maker
 
-adminlte-maker:
+admin_lte_maker:
     base_layout:          '@AdminLTE/layout/default-layout.html.twig'
     skeleton_dir:         .../src/DependencyInjection/../Resources/skeleton/
     datatable:
