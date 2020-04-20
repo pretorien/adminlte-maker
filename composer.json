@@ -1,7 +1,8 @@
 {
     "name": "pretorien/adminlte-maker",
     "type": "symfony-bundle",
-    "description": "AdminLTE Maker helps you create controllers and templates boostraped for Admin theme bundle",
+    "description": "AdminLTE Maker helps you create controllers and templates boostraped for AdminLTE theme bundle",
+    "keywords": [ "adminlte", "crud" ],
     "license": "MIT",
     "require": {
         "php": "^7.1.3",
