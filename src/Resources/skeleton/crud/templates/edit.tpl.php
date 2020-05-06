@@ -13,7 +13,7 @@
                     <div class="pull-right">
                         <button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
                         <a class="btn btn-primary " href="{{ path('<?= $route_name ?>_index') }}">{{ 'Back to list'|trans }}</a>
-                        {{ include('<?= strtolower($entity_class_name) ?>/_delete_form.html.twig') }}
+                        {{ include('<?= $route_name ?>/_delete_form.html.twig') }}
                     </div>
                 {% endblock %}
                 {% block box_after %}{{ form_end(form) }}{% endblock %}
