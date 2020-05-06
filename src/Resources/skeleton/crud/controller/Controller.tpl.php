@@ -59,8 +59,8 @@ class <?= $class_name ?> extends <?= $parent_class_name; ?><?= "\n" ?>
         ?>
 
         $table->add('link', TextColumn::class, [
-        'data' => function (<?= $entity_class_name ?> $<?= strtolower($entity_class_name); ?>) {
-            return sprintf('<a class="btn btn-primary" href="%s"><i class="fa fa-search"></i>  Edit</a>', $this->generateUrl('<?= $route_name ?>_show', [
+        'data' => function (<?= $entity_class_name ?> $<?= strtolower($entity_class_name); ?>) use ($translator) {
+            return sprintf('<a class="btn btn-primary" href="%s"><i class="fa fa-search"></i>  '.$translator->trans('Edit').'</a>', $this->generateUrl('<?= $route_name ?>_show', [
                 'id' => $<?= strtolower($entity_class_name); ?>->getId(),
             ]) );
         },
