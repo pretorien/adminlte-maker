@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use Omines\DataTablesBundle\Column\TextColumn;
 use Omines\DataTablesBundle\Column\BoolColumn;
@@ -96,7 +97,7 @@ class <?= $class_name ?> extends <?= $parent_class_name; ?><?= "\n" ?>
     /**
      * @Route("/new", name="<?= $route_name ?>_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $em): Response
     {
         $<?= $entity_var_singular ?> = new <?= $entity_class_name ?>();
         $form = $this->createForm(<?= $form_class_name ?>::class, $<?= $entity_var_singular ?>);
@@ -104,9 +105,8 @@ class <?= $class_name ?> extends <?= $parent_class_name; ?><?= "\n" ?>
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($<?= $entity_var_singular ?>);
-                $entityManager->flush();
+                $em->persist($<?= $entity_var_singular ?>);
+                $em->flush();
             } catch (\Throwable $th) {
                 $this->addFlash("error", "Error saving item");
                 return $this->redirectToRoute('<?= $route_name ?>_index');
@@ -134,14 +134,14 @@ class <?= $class_name ?> extends <?= $parent_class_name; ?><?= "\n" ?>
     /**
      * @Route("/{<?= $entity_identifier ?>}/edit", name="<?= $route_name ?>_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, <?= $entity_class_name ?> $<?= $entity_var_singular ?>): Response
+    public function edit(Request $request, <?= $entity_class_name ?> $<?= $entity_var_singular ?>, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(<?= $form_class_name ?>::class, $<?= $entity_var_singular ?>);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->getDoctrine()->getManager()->flush();
+                $em->flush();
             } catch (\Throwable $th) {
                 $this->addFlash("error", "Error saving item");
                 return $this->redirectToRoute('<?= $route_name ?>_index');
@@ -159,13 +159,12 @@ class <?= $class_name ?> extends <?= $parent_class_name; ?><?= "\n" ?>
     /**
      * @Route("/{<?= $entity_identifier ?>}/delete/{token}", name="<?= $route_name ?>_delete", methods={"GET"})
      */
-    public function delete(Request $request, <?= $entity_class_name ?> $<?= $entity_var_singular ?>, $token): Response
+    public function delete(Request $request, <?= $entity_class_name ?> $<?= $entity_var_singular ?>, $token, EntityManagerInterface $em): Response
     {
         if ($this->isCsrfTokenValid('delete'.$<?= $entity_var_singular ?>->get<?= ucfirst($entity_identifier) ?>(), $token)) {
             try {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->remove($<?= $entity_var_singular ?>);
-                $entityManager->flush();
+                $em->remove($<?= $entity_var_singular ?>);
+                $em->flush();
             } catch (\Throwable $th) {
                 $this->addFlash("error", "Error deleted item");
                 return $this->redirectToRoute('<?= $route_name ?>_index');
