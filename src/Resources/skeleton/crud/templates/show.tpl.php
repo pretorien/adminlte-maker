@@ -22,7 +22,7 @@
                     <div class="pull-right">
                         <a class="btn btn-success " href="{{ path('<?= $route_name ?>_edit', {'<?= $entity_identifier ?>': <?= $entity_twig_var_singular ?>.<?= $entity_identifier ?>}) }}">{{ 'Edit'|trans }}</a>
                         <a class="btn btn-primary " href="{{ path('<?= $route_name ?>_index') }}">{{ 'Back to list'|trans }}</a>
-                        {{ include('<?= strtolower($entity_class_name) ?>/_delete_form.html.twig') }}
+                        {{ include('<?= $route_name ?>/_delete_form.html.twig') }}
                     </div>
                 {% endblock %}
                 {% block box_after %}{% endblock %}
