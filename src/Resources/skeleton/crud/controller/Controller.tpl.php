@@ -30,7 +30,7 @@ class <?= $class_name ?> extends <?= $parent_class_name; ?><?= "\n" ?>
     public function index(Request $request, DataTableFactory $dataTableFactory, TranslatorInterface $translator, <?= $repository_class_name ?> $<?= $repository_var ?>): Response
     {
         $table = $dataTableFactory->create();
-        <?php 
+<?php 
             foreach ($entity_fields as $field){
                 echo "\t\t";
                 switch ($field['type']) {
