@@ -97,7 +97,7 @@ class <?= $class_name ?> extends <?= $parent_class_name; ?><?= "\n" ?>
     /**
      * @Route("/new", name="<?= $route_name ?>_new", methods={"GET","POST"})
      */
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
         $<?= $entity_var_singular ?> = new <?= $entity_class_name ?>();
         $form = $this->createForm(<?= $form_class_name ?>::class, $<?= $entity_var_singular ?>);
@@ -108,10 +108,10 @@ class <?= $class_name ?> extends <?= $parent_class_name; ?><?= "\n" ?>
                 $em->persist($<?= $entity_var_singular ?>);
                 $em->flush();
             } catch (\Throwable $th) {
-                $this->addFlash("error", "Error saving item");
+                $this->addFlash('error', $translator->trans('Error saving item'));
                 return $this->redirectToRoute('<?= $route_name ?>_index');
             }
-            $this->addFlash("success", "Item successfully registered");
+            $this->addFlash('success', $translator->trans('Item successfully registered'));
             return $this->redirectToRoute('<?= $route_name ?>_index');
         }
 
@@ -134,7 +134,7 @@ class <?= $class_name ?> extends <?= $parent_class_name; ?><?= "\n" ?>
     /**
      * @Route("/{<?= $entity_identifier ?>}/edit", name="<?= $route_name ?>_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, <?= $entity_class_name ?> $<?= $entity_var_singular ?>, EntityManagerInterface $em): Response
+    public function edit(Request $request, <?= $entity_class_name ?> $<?= $entity_var_singular ?>, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
         $form = $this->createForm(<?= $form_class_name ?>::class, $<?= $entity_var_singular ?>);
         $form->handleRequest($request);
@@ -143,10 +143,10 @@ class <?= $class_name ?> extends <?= $parent_class_name; ?><?= "\n" ?>
             try {
                 $em->flush();
             } catch (\Throwable $th) {
-                $this->addFlash("error", "Error saving item");
+                $this->addFlash('error', $translator->trans('Error editing item'));
                 return $this->redirectToRoute('<?= $route_name ?>_index');
             }
-            $this->addFlash("success", "Item successfully registered");
+            $this->addFlash('success', $translator->trans('Item successfully edited'));
             return $this->redirectToRoute('<?= $route_name ?>_index');
         }
 
@@ -159,21 +159,21 @@ class <?= $class_name ?> extends <?= $parent_class_name; ?><?= "\n" ?>
     /**
      * @Route("/{<?= $entity_identifier ?>}/delete/{token}", name="<?= $route_name ?>_delete", methods={"GET"})
      */
-    public function delete(Request $request, <?= $entity_class_name ?> $<?= $entity_var_singular ?>, $token, EntityManagerInterface $em): Response
+    public function delete(Request $request, <?= $entity_class_name ?> $<?= $entity_var_singular ?>, $token, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
         if ($this->isCsrfTokenValid('delete'.$<?= $entity_var_singular ?>->get<?= ucfirst($entity_identifier) ?>(), $token)) {
             try {
                 $em->remove($<?= $entity_var_singular ?>);
                 $em->flush();
             } catch (\Throwable $th) {
-                $this->addFlash("error", "Error deleted item");
+                $this->addFlash('error', $translator->trans('Error deleting item'));
                 return $this->redirectToRoute('<?= $route_name ?>_index');
             }
-            $this->addFlash("success", "Item successfully deleted");
+            $this->addFlash('success', $translator->trans('Item successfully deleted'));
             return $this->redirectToRoute('<?= $route_name ?>_index');            
         }
 
-        $this->addFlash("error", "Error deleted item");
+        $this->addFlash('error', $translator->trans('Error deleting item'));
         return $this->redirectToRoute('<?= $route_name ?>_index');
     }
 }
