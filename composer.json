@@ -20,7 +20,7 @@
         "doctrine/annotations": "^1.0",
         "doctrine/common": "^2.0",
         "kevinpapst/adminlte-bundle": "^3.0",
-        "omines/datatables-bundle": "^0.3|^0.4"
+        "omines/datatables-bundle": ">0.3"
     },
     "autoload": {
         "psr-4": { "Pretorien\\AdminLTEMakerBundle\\": "src/" }
